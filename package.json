@@ -1,0 +1,23 @@
+{
+  "name": "eefrontend",
+  "version": "0.0.0",
+  "description": "Technical Frontend challenge for Electricity Exchange",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/citkane/eefronted.git"
+  },
+  "author": "Michael Jonker",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/citkane/eefronted/issues"
+  },
+  "homepage": "https://github.com/citkane/eefronted#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.5.0",
+    "jquery": "^3.3.1"
+  }
+}
