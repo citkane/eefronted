@@ -66,6 +66,7 @@ body,html {
 	overflow-y:auto;
 	background:var(--background);
 	height:var(--vpHeight);
+	position:relative;
 }
 #viewport .inner{
 	flex:1;
@@ -127,6 +128,82 @@ body,html {
 	left:var(--menuWidth);
 	right:0;
 	box-shadow: inset 4px 4px 8px 0px rgba(0,0,0,0.5);
-};
+	z-index:10;
+}
 
 /*********************************** End decorations */
+
+/*********************************** Modal */
+#modal {
+	position:fixed;
+	display:flex;
+	top:var(--headerHeight);
+	bottom:0;
+	left:var(--menuWidth);
+	right:0;
+	background:var(--col1);
+	align-items:center;
+	justify-content:center;
+	opacity:0;
+	transform:scale(0,0);
+	transition:all .5s;
+	z-index:5;
+}
+#modal.show {
+	opacity:1;	
+	top:var(--headerHeight);
+	bottom:0;
+	left:var(--menuWidth);
+	right:0;
+	transform:scale(1,1);
+}
+#modal .message{
+	min-height:200px;
+	min-width:200px;
+	background:white;
+	transform:scale(.1,.1);
+	transition:all .5s;
+	max-width:90%;
+}
+#modal.show .message{
+	transform:scale(1,1);
+}
+#modal .message{
+	position:relative;
+}
+#modal .actions{
+	position:absolute;
+	display:flex;
+	right:0;
+	top:0;
+}
+#modal .action {
+	font-size:1.5em;
+	padding:8px;
+	color:var(--col2Bold);
+	cursor:pointer;
+}
+#modal .inner {
+	padding:20px;
+	margin-top:20px;
+	max-width:350px;
+	line-height:1.5em;
+	text-align:center;
+}
+#modal .buttons{
+	display:flex;
+	margin-top:25px;
+	justify-content:center;
+}
+#modal .buttons .button {
+	text-transform:uppercase;
+	padding:12px;
+	margin:0 10px;
+	color:white;
+	background:var(--col2Bold);
+	cursor:pointer;
+}
+#modal .buttons .proceed {
+	background:var(--col4);
+}
+/*********************************** End modal */

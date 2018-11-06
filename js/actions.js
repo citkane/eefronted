@@ -2,9 +2,20 @@
 
 import {virtualDom} from "./state.js";
 import * as build from "./builder.js";
+const modal = virtualDom.modal;
 
 /*************************** Change between pages */
 export function changePage(id){
+	if(virtualDom.modal.open) return;
+	if(id === "sites"){
+		const empty = virtualDom.pages.dsus.isEmpty(true);
+		if(empty){
+			modal.toggle("nodsus",()=>{
+				changePage("dsus");
+			});
+			return;
+		}		
+	}
 	resetActions(id);
 	for(let key of Object.keys(virtualDom.pages)){
 		let page = virtualDom.pages[key];
@@ -47,6 +58,7 @@ function add(type){
 
 /*************************** Control the header action buttons */
 export function resetActions(id){
+	if(virtualDom.modal.open) return;
 	const actionPage = id==="sites"||id==="dsus";
 	for (let action of Object.keys(virtualDom.actionButtons)){
 		const button = virtualDom.actionButtons[action];
@@ -72,20 +84,28 @@ function areAllSaved(id){
 
 /*************************** Export the action API */
 export function saveSites(){
+	if(virtualDom.modal.open) return;
 	alert("saveSites");
 }
 export function addSite(){
+	if(virtualDom.modal.open) return;
 	add("site");
 }
 export function refreshSites(){
+	if(virtualDom.modal.open) return;
 	alert("refreshSites");
 }
 export function saveDsus(){
+	if(virtualDom.modal.open) return;
 	alert("saveDsus");
 }
 export function addDsu(){
+	if(virtualDom.modal.open) return;
 	add("dsu");
 }
 export function refreshDsus(){
-	alert("refreshDsus");
+	if(virtualDom.modal.open) return;
+	modal.toggle("refresh",()=>{
+		alert('refreshed');
+	});
 }

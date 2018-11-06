@@ -1,7 +1,9 @@
 "use strict";
 
-import {page,app} from "./builder.js";
 export const virtualDom = new Dom();
+import {page,app} from "./builder.js";
+
+
 
 function Dom(){
 	this.actionButtons = {};
@@ -18,6 +20,8 @@ Dom.prototype.addPage = function(data){
 Dom.prototype.getPage = function(key){
 	return this.pages[key];
 };
+import {makeModal} from "./modals.js";
+virtualDom.modal = new makeModal(virtualDom);
 
 
 

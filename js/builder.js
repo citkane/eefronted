@@ -3,6 +3,7 @@
 import * as common from "./common.js";
 import {changePage,resetActions} from "./actions.js";
 import * as form from "./forms.js";
+import {addDsu,addSite} from "./actions.js";
 /**
  * Constructors for top level layout
  */
@@ -23,18 +24,24 @@ const frame = {
 		this.id = data.id;
 		this.widgets = [];
 		this.root = $(`<div class = "page" id="${data.id}"></div>`);
-		this.extra = data.html?$(data.html):$(noWidgets(data.id));
+		this.extra = data.html?$(data.html):noWidgets(data.id);
 	},
 	title:function(){
 		this.root = $("#header h2");
 	}
 };
 function noWidgets(type){
-	return `
+	const word = type === "dsus"?"DSU":"Site";
+	const html = $(`
 	<div class="noWidgets ${type}">
-		There is nothing to show yet, please add a ${type}.
+		There is nothing to show yet, please add a ${word}.
+		<div class = "addWidget">Add a ${word}</div>
 	</div>
-	`;
+	`);
+	html.find(".addWidget").click(()=>{
+		type === "dsus"?addDsu():addSite();
+	});
+	return html;
 }
 for(let key of Object.keys(frame)){
 	frame[key].prototype.append = common.append;
@@ -57,12 +64,21 @@ frame.page.prototype.isValid = function(){
 	}
 	return valid;
 };
-frame.page.prototype.isEmpty = function(){
-	if(!this.widgets.length){
-		this.append(this.extra);
-	}else{
-		this.root.find(".noWidgets").remove();
+frame.page.prototype.isEmpty = function(skip){
+	if(!skip){
+		if(!this.widgets.length){
+			this.append(this.id === "dsus"||this.id === "sites"?noWidgets(this.id):this.extra);
+		}else{
+			this.root.find(".noWidgets").remove();
+		}
 	}
+	return this.widgets.length?false:true;	
+};
+frame.page.prototype.isAllSaved = function(){
+	if(!this.widgets.length) return true;
+	return this.widgets.some((widget)=>{
+		return !widget.saved;
+	});
 };
 
 export const menu = new frame.menu();
