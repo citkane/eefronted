@@ -9,7 +9,7 @@ function Dom(){
 	this.activePage = null;
 }
 Dom.prototype.addPage = function(data){
-	const Page = this.pages[data.id] = new page(data.id);
+	const Page = this.pages[data.id] = new page(data);
 	Page.title = data.title;
 	Page.menu = data.menu;
 	Page.actions = data.actions;

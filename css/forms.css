@@ -1,19 +1,35 @@
 
 .bigform{
-	font: 95% Arial, Helvetica, sans-serif;
-	max-width: 400px;
-	margin: 10px auto;
+	font: 95%;
+	margin: 0 auto;
 	padding: 16px;
-	background: #F7F7F7;
+	background: white;
+	width:100%;
+	flex:1;
+	display:flex;
+	flex-direction:column;
+	justify-content:flex-end;
 }
 .bigform h1{
-	background: #43D1AF;
-	padding: 20px 0;
+	background: var(--col1);
+	padding: 40px 20px 20px 15px;
 	font-size: 140%;
-	font-weight: 300;
-	text-align: center;
+	text-align: left;
 	color: #fff;
 	margin: -16px -16px 16px -16px;
+}
+.bigform .label{
+	padding-bottom:2px;
+}
+.bigform .info {
+	font-size:70%;
+	position:absolute;
+	bottom:0;
+	opacity:.5;
+}
+.bigform .formGroup{
+	position:relative;
+	margin-bottom:20px;
 }
 .bigform input[type="text"],
 .bigform input[type="date"],
@@ -40,7 +56,7 @@
 	border: 1px solid #ccc;
 	padding: 3%;
 	color: #555;
-	font: 95% Arial, Helvetica, sans-serif;
+	font: 95%;
 }
 .bigform input[type="text"]:focus,
 .bigform input[type="date"]:focus,

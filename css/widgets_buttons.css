@@ -23,7 +23,16 @@
 	justify-content:center;
 	align-items:center;
 	color:white;
-	opacity:.8;
+	
+}
+#header .button svg{
+	opacity:.4;
+}
+#header .button.ready{
+	box-shadow:0 0 15px 3px var(--col2Bold);	
+}
+#header .button.ready svg{
+	opacity:1;
 }
 /********************************* End buttons */
 
@@ -37,19 +46,23 @@
 	transition: all 0.5s;
 	position:relative;
 	opacity:1;
+	display:flex;
+	flex-direction:column;
 }
 .widget.new{
 	transform: scale(.1, .1);
 	opacity:0;
 }
-.widget .delete{
+.widget .actions{
 	position:absolute;
-	font-size:1.5em;
+	display:flex;
 	right:0;
 	top:0;
+}
+.widget .action {
+	font-size:1.5em;
 	padding:8px;
-	color:var(--col4);
+	color:white;
 	cursor:pointer;
 }
-
 /********************************* End widgets */

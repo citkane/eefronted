@@ -3,6 +3,7 @@ import * as build from "./builder.js";
 import * as actions from "./actions.js";
 import {virtualDom} from "./state.js";
 import {logo} from "../resources/logo.js";
+import {frontPage} from "../resources/frontPage.js";
 
 //Add the site logo
 $("#branding .inner").html(logo).click(()=>{
@@ -23,6 +24,16 @@ const page ={
 			save:false,
 			refresh:false,
 			add:false
+		},
+		html:frontPage
+	},
+	dsus:{
+		title:"EE client DSUs",
+		menu:"Manage DSUs",
+		actions:{
+			save:actions.saveDsus,
+			refresh:actions.refreshDsus,
+			add:actions.addDsu
 		}
 	},
 	sites:{
@@ -34,15 +45,7 @@ const page ={
 			add:actions.addSite
 		}
 	},
-	dsus:{
-		title:"EE client DSUs",
-		menu:"Manage DSUs",
-		actions:{
-			save:actions.saveDsus,
-			refresh:actions.refreshDsus,
-			add:actions.addDsu
-		}
-	},
+
 	table:{
 		title:"EE client network",
 		menu:"Network Overview",

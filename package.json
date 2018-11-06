@@ -4,7 +4,8 @@
   "description": "Technical Frontend challenge for Electricity Exchange",
   "main": "js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/http-server"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/citkane/eefronted#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
+    "http-server": "^0.11.1",
     "jquery": "^3.3.1"
   }
 }
