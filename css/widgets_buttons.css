@@ -1,0 +1,55 @@
+/********************************* Buttons */
+.menuButton{
+	padding:15px;
+	cursor:pointer;
+	color:white;
+	text-transform:uppercase;
+	font-family:open_sansbold;
+	margin-bottom:1px;
+}
+.menuButton.active,.menuButton:hover{
+	background:var(--col1Bold);
+}
+#header .button{
+	font-size:1.5em;
+	padding:10px;
+	cursor:pointer;
+	background:var(--col2Bold);
+	border-radius:50%;
+	margin:10px;
+	width:50px;
+	height:50px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	color:white;
+	opacity:.8;
+}
+/********************************* End buttons */
+
+/********************************* Widgets */
+
+.widget {
+	flex: 1 1 350px;
+	background:white;
+	box-shadow:3px 3px 5px 0px rgba(50, 50, 50, 0.3);
+	transform: scale(1, 1);
+	transition: all 0.5s;
+	position:relative;
+	opacity:1;
+}
+.widget.new{
+	transform: scale(.1, .1);
+	opacity:0;
+}
+.widget .delete{
+	position:absolute;
+	font-size:1.5em;
+	right:0;
+	top:0;
+	padding:8px;
+	color:var(--col4);
+	cursor:pointer;
+}
+
+/********************************* End widgets */

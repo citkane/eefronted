@@ -1,0 +1,78 @@
+
+.bigform{
+	font: 95% Arial, Helvetica, sans-serif;
+	max-width: 400px;
+	margin: 10px auto;
+	padding: 16px;
+	background: #F7F7F7;
+}
+.bigform h1{
+	background: #43D1AF;
+	padding: 20px 0;
+	font-size: 140%;
+	font-weight: 300;
+	text-align: center;
+	color: #fff;
+	margin: -16px -16px 16px -16px;
+}
+.bigform input[type="text"],
+.bigform input[type="date"],
+.bigform input[type="datetime"],
+.bigform input[type="email"],
+.bigform input[type="number"],
+.bigform input[type="search"],
+.bigform input[type="time"],
+.bigform input[type="url"],
+.bigform textarea,
+.bigform select 
+{
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 4%;
+	border: 1px solid #ccc;
+	padding: 3%;
+	color: #555;
+	font: 95% Arial, Helvetica, sans-serif;
+}
+.bigform input[type="text"]:focus,
+.bigform input[type="date"]:focus,
+.bigform input[type="datetime"]:focus,
+.bigform input[type="email"]:focus,
+.bigform input[type="number"]:focus,
+.bigform input[type="search"]:focus,
+.bigform input[type="time"]:focus,
+.bigform input[type="url"]:focus,
+.bigform textarea:focus,
+.bigform select:focus
+{
+	box-shadow: 0 0 5px #43D1AF;
+	padding: 3%;
+	border: 1px solid #43D1AF;
+}
+
+.bigform input[type="submit"],
+.bigform input[type="button"]{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	padding: 3%;
+	background: #43D1AF;
+	border-bottom: 2px solid #30C29E;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;	
+	color: #fff;
+}
+.bigform input[type="submit"]:hover,
+.bigform input[type="button"]:hover{
+	background: #2EBC99;
+}

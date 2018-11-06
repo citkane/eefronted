@@ -1,0 +1,132 @@
+:root {
+	--menuWidth:250px;
+	--brandingWidth:250px;
+	--headerHeight:80px;
+	--padding:8px;
+	--vpHeight:calc(100vh - var(--headerHeight));
+	--background:rgba(0, 130, 179, 0.05);
+	--backgroundBold:rgba(0,130,179,1);
+	--col1:rgba(0,168,145,0.8);
+	--col1Bold:rgba(0,168,145,1);
+	--col2:rgba(125,194,79,0.8);
+	--col2Bold:rgba(125,194,79,1);
+	--col3:rgba(0,130,179,0.8);
+	--col3Bold:rgba(0,130,179,1);
+	--col4:rgb(235,127,55);
+}
+/*********************************** The main page structure */
+body,html {
+	width:100%;
+	height:100%;
+	position:relative;
+	font-family:"open_sansregular","sans-serif";
+}
+* {
+	box-sizing: border-box;
+}
+#app {
+	width:100vw;
+	height:100vh;
+	display:flex;
+	align-items:stretch;
+	flex-direction:column;
+}
+#header {
+	display:flex;
+	height:var(--headerHeight);	
+	z-index:10;
+}
+#header #branding{
+	width:var(--brandingWidth);
+	background:var(--col2);
+	z-index:10;
+	
+}
+#header #actions{
+	flex:1;
+	background:var(--col2);
+}
+
+#panel {
+	flex:1;
+	display:flex;
+	align-items:stretch;
+}
+#panel #menu{
+	padding-top:20px;
+	width:var(--menuWidth);
+	background:var(--col1);
+	overflow-y:auto;
+	display:flex;
+	flex-direction:column;
+}
+#panel #viewport {
+	display:flex;
+	flex:1;
+	overflow-y:auto;
+	background:var(--background);
+	height:var(--vpHeight);
+}
+#viewport .inner{
+	flex:1;
+}
+/*********************************** End the main page structure */
+
+/*********************************** Sub sections */
+
+#header #actions .inner {
+	display:flex;
+	height:100%;
+	padding:var(--padding);
+	align-items:center;
+}
+#header #actions .buttons {
+	display:flex;
+	flex:1;
+	justify-content:flex-end;
+}
+#branding .inner{
+	display:flex;
+	align-items:center;
+	height:100%;
+	position:relative;
+	padding:var(--padding);
+	margin-left:15px;
+	cursor:pointer;
+}
+#branding svg{
+	height:90%;
+	fill:var(--backgroundBold);
+}
+#header h2{
+	color:var(--backgroundBold);
+	font-size:1.5em;
+	margin-left:20px;
+}
+#sites.page, #dsus.page {
+	padding:20px;
+	display:grid;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	grid-auto-rows: minmax(500px, auto);
+	grid-gap: 20px;
+}
+/*********************************** End Sub sections */
+
+/*********************************** Decorations */
+#header{
+	border-bottom:1px solid var(--col1Bold);
+}
+#menu{
+	border-right:2px solid var(--col1Bold);
+}
+#viewport .shadow{
+	position:fixed;
+	pointer-events: none;
+	top:var(--headerHeight);
+	bottom:0;
+	left:var(--menuWidth);
+	right:0;
+	box-shadow: inset 4px 4px 8px 0px rgba(0,0,0,0.5);
+};
+
+/*********************************** End decorations */
