@@ -28,7 +28,6 @@ Api.prototype.put = function(widget,callback){
 		data.name = widget.name;
 		data.description = widget.description;
 	}
-	console.log(data);
 	fetch(endpoint, {
 		method: "PUT",
 		

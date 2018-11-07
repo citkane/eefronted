@@ -15,10 +15,14 @@ export function makeTable(update){
 		const headers = table.find("th");
 		headers[1].onclick = function(){
 			const newDir = sortState[1] === "asc"?"desc":"asc";
-			$(headers[1]).removeClass(sortState[1]).addClass(newDir);
+			$(headers[3]).removeClass("active");
+			$(headers[1]).removeClass(sortState[1]).addClass(newDir).addClass("active");
 			sorter(1);
 		};
 		headers[3].onclick = function(){
+			const newDir = sortState[3] === "asc"?"desc":"asc";
+			$(headers[1]).removeClass("active");
+			$(headers[3]).removeClass(sortState[3]).addClass(newDir).addClass("active");
 			sorter(3);
 		};
 	}
@@ -28,7 +32,6 @@ export function makeTable(update){
 	for(const site of virtualDom.pages.sites.widgets){
 		table.append(makeRow(site));
 	}
-	sortTable(1,"desc",table);
 }
 
 function sorter(column){
@@ -37,11 +40,11 @@ function sorter(column){
 	sortState[column] = sortState[column] === "asc"?"desc":"asc";
 }
 
-let zebra = "odd";
+
 function makeRow(site){
-	zebra = zebra === "odd"?"even":"odd";
+	
 	return `
-	<tr class = "${zebra}">
+	<tr>
 		<td>${site.id}</td>
 		<td>${site.description}</td>
 		<td>${site.dsuId}</td>

@@ -70,15 +70,20 @@ export function number(name,key,spec,parent){
 	};
 }
 export function dropDown(name,key,parent){
-	let options = "";
-	for(let widget of virtualDom.pages.dsus.widgets){
-		options += `<option value="${widget.id}">[${widget.id}] ${widget.name}</option>`;
-	}
+	
+	this.makeOptions = ()=>{
+		let options = "";
+		for(let widget of virtualDom.pages.dsus.widgets){
+			options += `<option value="${widget.id}">[${widget.id}] ${widget.name}</option>`;
+		}
+		return options;
+	};
+
 	this.root = $(`
 	<div class="formGroup">
 		<div class="label"><label>${name}</label></div>
 		<select name="${name}" placeholder = "DSU">
-			${options}
+			${this.makeOptions()}
 		</select>
 	</div>
 	`);

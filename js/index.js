@@ -3,7 +3,6 @@ import * as build from "./builder.js";
 import * as actions from "./actions.js";
 import {virtualDom} from "./state.js";
 import {logo} from "../resources/logo.js";
-import {frontPage} from "../resources/frontPage.js";
 import {api} from "./api.js";
 import {makeTable} from "./table.js";
 
@@ -27,11 +26,11 @@ const page ={
 			refresh:false,
 			add:false
 		},
-		html:frontPage
+		html:$("#homeWrapper").clone()
 	},
 	dsus:{
 		title:"EE client DSUs",
-		menu:"Manage DSUs",
+		menu:"Add DSU",
 		actions:{
 			save:actions.save,
 			refresh:actions.refresh,
@@ -40,7 +39,7 @@ const page ={
 	},
 	sites:{
 		title:"EE client sites",
-		menu:"Manage Sites",
+		menu:"Add Site",
 		actions:{
 			save:actions.save,
 			refresh:actions.refresh,
@@ -50,7 +49,7 @@ const page ={
 
 	table:{
 		title:"EE client network",
-		menu:"Network Overview",
+		menu:"View Sites",
 		actions:{
 			save:false,
 			refresh:false,
@@ -59,6 +58,7 @@ const page ={
 		html:$("#tableWrapper").clone()
 	}
 };
+$("#homeWrapper").remove();
 $("#tableWrapper").remove();
 //Create the pages
 for(let key of Object.keys(page)){
@@ -74,6 +74,8 @@ actions.changePage("home");
 api.get("dsus",(response)=>{
 	if(response.status){
 		console.error(response.status,response.statusText);
+		alert("Could not connect to the API server, please check the console for logs.");
+		$("#app").css("opacity",1);
 	}else{
 		for (let key in response){
 			const widget = new build.widget("dsu",response[key]);
@@ -96,7 +98,14 @@ api.get("dsus",(response)=>{
 				virtualDom.pages.sites.isEmpty();
 				makeTable();
 				makeTable(true);
+				$("#app").css("opacity",1);
 			}
 		});
+	}
+});
+
+$(window).bind("beforeunload", function(){	
+	if(virtualDom.activePage.isSomeNotSaved()){
+		return "You have unsaved changes!";
 	}
 });

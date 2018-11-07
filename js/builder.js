@@ -6,6 +6,7 @@ import * as form from "./forms.js";
 import {addDsu,addSite} from "./actions.js";
 import {api} from "./api.js";
 import {makeTable} from "./table.js";
+import { virtualDom } from "./state.js";
 
 /**
  * Constructors for top level layout
@@ -35,9 +36,21 @@ const frame = {
 };
 function noWidgets(type){
 	const word = type === "dsus"?"DSU":"Site";
+	const line = type === "dsus"?
+	`
+A DSU is comprised of a number of sites that have signed up with us.
+A DSU comprises of multiple sites.
+	`
+	:
+	`
+Each site has one or more generators that we control.
+A site can only be part of a single DSU.
+	`;
 	const html = $(`
-	<div class="noWidgets ${type} widget">
-		There is nothing to show yet, please add a ${word}.
+	<div class="noWidgets ${type}">
+		<div class = "widget">
+			${line}
+		</div>
 		<div class = "addWidget">Add a ${word}</div>
 	</div>
 	`);
@@ -234,11 +247,16 @@ widget.prototype.save = function(callback){
 			}else{
 				this.id = response.id;
 				this.saved = true;
+				this.changed = false;
 				this.deleteButton.remove();
 				this.type === "dsu"?this.saveButton.remove():this.saveButton.hide();
 				this.root.addClass("saved");
 				if(this.type === "site"){
 					this.dsu.savedId = this.dsu.input.val();
+				}else{
+					for(const site of virtualDom.pages.sites.widgets){
+						site.dsu.input.html(site.dsu.makeOptions());
+					}
 				}
 				for(let item of this.inputs){
 					if(item.input.attr("placeholder") !== "DSU") item.input.prop("disabled", true);
@@ -253,6 +271,7 @@ widget.prototype.reset = function(){
 	if(!this.saved){
 		this.delete();
 	}else if(this.changed){
+		this.saveButton.hide();
 		this.dsu.input.val(this.dsu.savedId);
 		this.dsuId = this.dsu.savedId;
 		this.changed = false;

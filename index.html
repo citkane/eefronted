@@ -14,9 +14,10 @@
 		<link rel="stylesheet" href="css/index.css" type="text/css" charset="utf-8" />
 		<link rel="stylesheet" href="css/widgets_buttons.css" type="text/css" charset="utf-8" />
 		<link rel="stylesheet" href="css/forms.css" type="text/css" charset="utf-8" />
+		<link rel="stylesheet" href="css/home.css" type="text/css" charset="utf-8" />
 		<link rel="shortcut icon" href="resources/favicon.ico" />
 		<script src="js/lib/fontawsome/all.min.js"></script>
-		
+
 	</head>
 	<body>
 		<div id = "app">
@@ -42,14 +43,56 @@
 				<div id = "viewport">
 					<div class="inner"></div>
 					<div class="shadow"></div>
+					<div id = "homeWrapper">
+						<h1>Electricity Exchange Frontend Technical Challenge</h1>
+						<div class = "content">
+							<div class= "section">
+								<h2>Welcome</h2>
+								<p>This is the technical challenge solution for Michael Jonker. I hope you enjoy playing with it as much as I enjoyed building it.</p>
+							</div>
+							<div class= "section">
+								<h2>Visual Design Methodology</h2>
+								<p>I have approached the challenge as a Single Page Application (SPA), leaning heavily on the design patterns of Google Material Design.</p>
+								<p>These patterns have been implemented without the use of auto-generated templates or frameworks, ie. I have used bespoke HTML, JS and CSS.</p>
+								<p>Colors are based on the visual identity of the existing Electricity Exchange website.</p>
+								<div class="images">
+									<a href = "resources/layout.png" target = "_blank"><img id="layout_image" src = "resources/layout.png" alt = "Typical layout" /></a>
+									<a href = "resources/widget.png" target = "_blank"><img id="widget_image" id="layout_image" src = "resources/widget.png" alt = "Typical widget" /></a>
+								</div>
+							</div>
+							<div class= "section">
+								<h2>Libraries and logic used</h2>
+								<p>The primary app layout is pure HTML, which sets out the app layout areas.<p>
+								<p>Almost everything else are reusable components, the HTML for which are generated within the javascript using es6 template string syntax.</p>
+								<p>Every item created, eg. widget, button, menu item, input, is a prototypical object, with functions to control display, rendering, validation etc.</p>
+								<h3>jQuery</h3>
+								<p>I have used the <a href = "https://jquery.com/" target="_blank">jQuery</a> library extensively for dom manipulation. Animations are CSS3</p>
+								<h3>FontAwesome</h3>
+								<p>I have used <a href = "https://fontawesome.com/" target="_blank">FontAwesome</a> library for graphical icons</p>
+								<h3>Functional Logic</h3>
+								<p>All prototypical app elements are stored in a hierarchical tree. I have called this the "Virtual Dom" as it does not necessarily reflect the visual DOM, but contains references to all the visual DOM elements as they relate to the data structure they represent.</p>
+								<p>With this I am able to recursively query, validate and update the entire data-set and trigger any required visual updates along the way.</p>
+							</div>
+							<div class = "section">
+								<h2>Notes on system</h2>
+								<p>The application can be statically served, so it is OS agnostic. My personal preference is Debian based Linux systems.</p>
+								<p>For a real world production scenario, I would use a packaging framework to minify and package the application, then serve it from a fast static server such as nGinx.</p>
+							</div>
+							<div class = "section">
+								<h2>Assumptions</h2>
+								<p>The application was built for modern browsers using HTML5, CSS3 and ES6 features.</p>
+								<p>The structure is present for CSS @media query style mobile optimisation, but I have not undertaken this as part of the scope for this exercise.</p>
+							</div>
+						</div>
+					</div>
 					<div id = "tableWrapper">
 						<table>
 							<tbody class="tbody">
-								<tr>
+								<tr class="header">
 									<th>Site ID</th>
-									<th>Site Description</th>
+									<th class = "sortable asc"><span>Site Description</span><i class="fas fa-arrow-circle-up"></i></th>
 									<th>DSU ID</th>
-									<th>DSU Description</th>
+									<th class = "sortable asc"><span>DSU Description</span><i class="fas fa-arrow-circle-up"></i></th>
 									<th>DSU Op Cert</th>
 								</tr>
 							</tbody>
