@@ -14,6 +14,16 @@
 	--col3Bold:rgba(0,130,179,1);
 	--col4:rgb(235,127,55);
 }
+
+.widget, #header, #menu {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 /*********************************** The main page structure */
 body,html {
 	width:100%;
@@ -207,3 +217,24 @@ body,html {
 	background:var(--col4);
 }
 /*********************************** End modal */
+
+/*********************************** The table */
+
+#table table{
+	width:100%;
+}
+#table tr.odd {
+	background:white;
+}
+#table td{
+	padding:10px;
+	padding-left:20px;
+}
+#table th {
+	text-align:left;
+	padding:20px;
+	background:var(--col1Bold);
+	color:white;
+}
+/*********************************** End table */
+

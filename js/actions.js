@@ -2,18 +2,22 @@
 
 import {virtualDom} from "./state.js";
 import * as build from "./builder.js";
+import {makeTable} from "./table.js";
 const modal = virtualDom.modal;
 
 /*************************** Change between pages */
 export function changePage(id){
-	if(virtualDom.modal.open) return;
+	if(virtualDom.modal.open || (virtualDom.activePage && virtualDom.activePage.id === id)) return;
+	if(virtualDom.activePage && virtualDom.activePage.isSomeNotSaved()){
+		modal.toggle("incomplete");
+		return;
+	}
 	if(id === "sites"){
 		const empty = virtualDom.pages.dsus.isEmpty(true);
 		if(empty){
 			modal.toggle("nodsus",()=>{
 				changePage("dsus");
 			});
-			return;
 		}		
 	}
 	resetActions(id);
@@ -58,6 +62,7 @@ function add(type){
 
 /*************************** Control the header action buttons */
 export function resetActions(id){
+	if(!id) id=virtualDom.activePage.id;
 	if(virtualDom.modal.open) return;
 	const actionPage = id==="sites"||id==="dsus";
 	for (let action of Object.keys(virtualDom.actionButtons)){
@@ -65,47 +70,52 @@ export function resetActions(id){
 		button.active(false);
 		if(id === "dsus" && action === "add") button.active(true);
 		if(id === "sites" && action === "add" && hasValidDsus()) button.active(true);
-		if(actionPage && action === "refresh" && !areAllSaved(id)) button.active(true);
+		if(actionPage && action === "refresh" && virtualDom.pages[id].isSomeNotSaved()) button.active(true);
 	}
 }
 function hasValidDsus(){
 	const page = virtualDom.pages.dsus;
 	return page.widgets.filter((dsu)=>{
-		return true; //dsu.saved
+		return dsu.saved;
 	}).length > 0;
 }
-function areAllSaved(id){
-	const page = virtualDom.pages[id];
-	return page.widgets.filter((widget)=>{
-		return !widget.saved;
-	}).length === 0;
-}
+
 
 
 /*************************** Export the action API */
-export function saveSites(){
-	if(virtualDom.modal.open) return;
-	alert("saveSites");
+export function save(){
+	if(virtualDom.modal.open || !virtualDom.actionButtons.save.isActive) return;
+	modal.toggle("save",()=>{
+		const toSave = virtualDom.activePage.widgets.filter((widget)=>{
+			return !widget.saved || widget.changed;
+		});
+		let length = toSave.length;
+		for(const widget of toSave){
+			widget.save(()=>{
+				length --;
+				if(!length){
+					resetActions(virtualDom.activePage.id);
+					makeTable(true); 
+				}
+			});
+		}
+	});
 }
 export function addSite(){
 	if(virtualDom.modal.open) return;
 	add("site");
 }
-export function refreshSites(){
-	if(virtualDom.modal.open) return;
-	alert("refreshSites");
-}
-export function saveDsus(){
-	if(virtualDom.modal.open) return;
-	alert("saveDsus");
+export function refresh(){
+	if(virtualDom.modal.open || !virtualDom.actionButtons.refresh.isActive) return;
+	modal.toggle("refresh",()=>{
+		const widgets = virtualDom.activePage.widgets;
+		for (const widget of widgets){
+			widget.reset();
+		}
+		resetActions(virtualDom.activePage.id);
+	});
 }
 export function addDsu(){
 	if(virtualDom.modal.open) return;
 	add("dsu");
-}
-export function refreshDsus(){
-	if(virtualDom.modal.open) return;
-	modal.toggle("refresh",()=>{
-		alert('refreshed');
-	});
 }

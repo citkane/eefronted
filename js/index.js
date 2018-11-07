@@ -4,6 +4,8 @@ import * as actions from "./actions.js";
 import {virtualDom} from "./state.js";
 import {logo} from "../resources/logo.js";
 import {frontPage} from "../resources/frontPage.js";
+import {api} from "./api.js";
+import {makeTable} from "./table.js";
 
 //Add the site logo
 $("#branding .inner").html(logo).click(()=>{
@@ -31,8 +33,8 @@ const page ={
 		title:"EE client DSUs",
 		menu:"Manage DSUs",
 		actions:{
-			save:actions.saveDsus,
-			refresh:actions.refreshDsus,
+			save:actions.save,
+			refresh:actions.refresh,
 			add:actions.addDsu
 		}
 	},
@@ -40,8 +42,8 @@ const page ={
 		title:"EE client sites",
 		menu:"Manage Sites",
 		actions:{
-			save:actions.saveSites,
-			refresh:actions.refreshSites,
+			save:actions.save,
+			refresh:actions.refresh,
 			add:actions.addSite
 		}
 	},
@@ -53,9 +55,11 @@ const page ={
 			save:false,
 			refresh:false,
 			add:false
-		}
+		},
+		html:$("#tableWrapper").clone()
 	}
 };
+$("#tableWrapper").remove();
 //Create the pages
 for(let key of Object.keys(page)){
 	page[key].id = key;
@@ -65,3 +69,34 @@ for(let key of Object.keys(page)){
 	build.menu.append(thisPage.menuButton.root); //render the menu button
 }
 actions.changePage("home");
+
+//Load the existing DSUs and Sites
+api.get("dsus",(response)=>{
+	if(response.status){
+		console.error(response.status,response.statusText);
+	}else{
+		for (let key in response){
+			const widget = new build.widget("dsu",response[key]);
+			widget.page = virtualDom.pages.dsus;
+			virtualDom.pages.dsus.prepend(widget.render());
+			virtualDom.pages.dsus.widgets.push(widget);
+		}
+		virtualDom.pages.dsus.isEmpty();
+
+		api.get("sites",(response)=>{
+			if(response.status){
+				console.error(response.status,response.statusText);
+			}else{
+				for (let key in response){
+					const widget = new build.widget("site",response[key]);
+					widget.page = virtualDom.pages.sites;
+					virtualDom.pages.sites.prepend(widget.render());
+					virtualDom.pages.sites.widgets.push(widget);
+				}
+				virtualDom.pages.sites.isEmpty();
+				makeTable();
+				makeTable(true);
+			}
+		});
+	}
+});

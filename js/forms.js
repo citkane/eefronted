@@ -2,7 +2,7 @@
 
 import {virtualDom} from "./state.js";
 
-export function text(name,length,parent){
+export function text(name,key,length,parent){
 	this.init = false;
 	this.root = $(`
 	<div class="formGroup">
@@ -21,6 +21,7 @@ export function text(name,length,parent){
 	this.isValid = function(){
 		const valid =  this.input.val() && this.input.val().length <= length;
 		valid?this.input[0].setCustomValidity(""):this.input[0].setCustomValidity(this.init?"Invalid input":"");
+		if(valid) parent[key] = this.input.val();
 		return valid;
 	};
 	this.input.on("keyup focusout",(e)=>{
@@ -32,13 +33,13 @@ export function text(name,length,parent){
 	});
 }
 
-export function number(name,spec){
+export function number(name,key,spec,parent){
 	this.spec = spec;
 	let step = ".";
 	let amount = spec.decimalPlaces;
 	while (amount > 0){
 		amount --;
-		amount?step += "0":step += "1";	
+		amount?step += "0":step += "1";
 	}
 	this.root = $(`
 	<div class="formGroup">
@@ -63,22 +64,22 @@ export function number(name,spec){
 		const number  = this.input.prop("valueAsNumber");
 		const decimal = this.input.val().split(".")[1];
 		const valid = !Number.isNaN(number) && (!decimal || decimal.length <= this.spec.decimalPlaces);
-		valid?this.input[0].setCustomValidity(""):this.input[0].setCustomValidity(this.init?"Invalid field":""); 
+		valid?this.input[0].setCustomValidity(""):this.input[0].setCustomValidity(this.init?"Invalid field":"");
+		if(valid)  parent[key] = this.input.val();
 		return valid;
 	};
 }
-export function dropDown(name){
+export function dropDown(name,key,parent){
 	let options = "";
 	for(let widget of virtualDom.pages.dsus.widgets){
-		const name = widget.dsuName.input.val();
-		options += `<option value="${name}">${name}</option>`;
+		options += `<option value="${widget.id}">[${widget.id}] ${widget.name}</option>`;
 	}
 	this.root = $(`
 	<div class="formGroup">
 		<div class="label"><label>${name}</label></div>
-		<select name="${name}">
+		<select name="${name}" placeholder = "DSU">
 			${options}
-		</select> 
+		</select>
 	</div>
 	`);
 	this.input = $(this.root).find("select");
@@ -88,25 +89,34 @@ export function dropDown(name){
 			this.isValid();
 		}
 		if(e.type === "input"){
+			if(parent.saved){
+				if(this.savedId == this.input.val()){
+					parent.saveButton.hide();
+					parent.changed = false;
+					parent.root.removeClass("changed");
+				}else{
+					parent.saveButton.show();
+					parent.changed = true;
+					parent.root.addClass("changed");
+				}
+			}
 			const pageValid = virtualDom.activePage.isValid();
-			virtualDom.actionButtons.save.active(pageValid);			
+			const canRefreshPage = virtualDom.activePage.isSomeNotSaved();
+			virtualDom.actionButtons.save.active(pageValid && canRefreshPage);
+			virtualDom.actionButtons.refresh.active(canRefreshPage);
 		}
 	});
 	this.isValid = function(){
 		const valid = this.input.val() && dsuExistsSaved(this.input.val());
 		valid?this.input[0].setCustomValidity(""):this.input[0].setCustomValidity(this.init?"Invalid field":"");
+		if(valid)  parent[key] = this.input.val();
 		return valid;
 	};
 }
 
-function dsuExistsSaved(name){
+function dsuExistsSaved(id){
 	const dsus = virtualDom.pages.dsus.widgets;
 	return dsus.some((dsu)=>{
-		return dsu.dsuName === name && dsu.saved;
+		return dsu.id == id && dsu.saved;
 	});
-}
-
-export function valid(e){
-	console.log(e);
-	alert("is it valid");
 }

@@ -65,7 +65,9 @@
 	color:white;
 	cursor:pointer;
 }
-
+.widget.noValid .save{
+	opacity:.3;
+}
 .addWidget{
 	position:absolute;
 	right:18px;

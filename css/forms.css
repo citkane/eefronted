@@ -13,7 +13,7 @@
 .bigform h1{
 	background: var(--col1);
 	padding: 40px 20px 20px 15px;
-	font-size: 140%;
+	font-size: 150%;
 	text-align: left;
 	color: #fff;
 	margin: -16px -16px 16px -16px;
@@ -91,4 +91,13 @@
 .bigform input[type="submit"]:hover,
 .bigform input[type="button"]:hover{
 	background: #2EBC99;
+}
+.saved .bigform .info{
+	display:none;
+}
+.saved .bigform input[type="text"],
+.saved .bigform input[type="number"]{
+	background:var(--background);
+	color:black;
+	border:none;
 }

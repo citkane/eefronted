@@ -16,12 +16,12 @@ makeModal.prototype.toggle = function(message,callback){
 		this.callback = callback;
 		const html = $(messages[message]||"No message found for the modal");
 		const buttons = html.find(".buttons");
-		if(buttons.length){			
+		if(buttons.length){
 			const proceed = buttons.find(".proceed");
 			if(proceed.length){
 				proceed.click(()=>{
-					callback();
 					this.toggle();
+					callback();
 				});
 				this.callback = false;
 			}
@@ -33,18 +33,34 @@ makeModal.prototype.toggle = function(message,callback){
 	}
 };
 
+const buttons = `
+<div class="buttons">
+	<div class = "button cancel">cancel</div>
+	<div class= "button proceed">proceed</div>
+</div>
+`;
 const messages = {
 	nodsus:`
-	<div>You have no DSU's set up yet. Please add at least one DSU before adding a site</div>
+	<div>You have no DSUs set up yet. Please add at least one DSU before adding a site</div>
 	`,
 	refresh:`
 	<div>
 		<div>Are you sure you want to reset the page?</div>
 		<div>All unsaved data will be lost.</div>
-		<div class="buttons">
-			<div class = "button cancel">cancel</div>
-			<div class= "button proceed">proceed</div>
-		</div>
+		${buttons}
 	</div>
 	`,
+	save:`
+	<div>
+		<div>Are you sure you want to save the page?</div>
+		<div>All unsaved data will be committed.</div>
+		${buttons}
+	</div>
+	`,
+	incomplete:`
+	<div>
+		<div>You have unsaved forms on the page</div>
+		<div>Please save or remove them before proceeding.</div>
+	</div>
+	`
 };
